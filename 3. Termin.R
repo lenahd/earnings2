@@ -1,0 +1,33 @@
+library(palmerpenguins)
+library(ggplot2)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point()
+names(penguins)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, colour = species)) + geom_point()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, shape = species)) + geom_point()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, shape = species, colour = species)) + geom_point()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, shape = species, colour = sex)) + geom_point()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point()+ geom_smooth()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(colour =species))+ geom_smooth()
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point()+ geom_smooth(aes (colour = species))
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(color = "red")+ geom_smooth(aes(color = species))
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(size = 1)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = flipper_length_mm/120))
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = flipper_length_mm/120, color = species))
+names(penguins)
+table(penguins$year)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = (year - 2000)/3, color = species))
+?geom_point
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = (year - 2000)/3, color = species), alpha = 0.3)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = (year - 2000)/3, color = species), alpha = (year - 2000)/3/2.8)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = (year - 2000)/3, color = species), alpha = (year - 2000)/3/2.8, size = 2)
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(size = (year - 2000)/3, colour =species), alpha = (year-2000)/3/2.8), size = 2)
+
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) + geom_point(aes(colour = island, shape = species))
+stroke?
+  
+ggplot(penguins, aes(x = species,y=body_mass_g))+geom_boxplot()+geom_jitter(alpha=0.2,width= 0.05,aes(colour=sex))
+hist(penguins$body_mass_g)
+ggplot(penguins, aes(y = body_mass_g)) + geom_histogram()
+?geom_histogram
+ggplot(penguins, aes (x = body_mass_g)) + geom_histogram(bins =12, aes (fill = species), alpha = 0.1)
+ggplot (penguins, aes(x = body_mass_g)) + geom_density(aes(fill = species), alpha = 0.5)

@@ -1,0 +1,18 @@
+---
+title: "6. Termin"
+author: "Lena Heidrich"
+date: "2024-11-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+library(foreign)
+library(ggplot2)
+
+kidiq <- read.dta("kidiq.dat")
+
+```{r score}
+ggplot(kidiq, aes(x = mom_iq, y = kid_score)) + geom_point() + geom_smooth(method = "lm") + labs(x = "moms")

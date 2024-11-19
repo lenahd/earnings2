@@ -1,0 +1,76 @@
+---
+title: "Palmer penguins"
+author: "Lena Heidrich"
+date: "2024-10-22"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+#R für Sprache
+#include=FALSE wird nicht in Dokument gezeigt
+
+knitr::opts_chunk$set(echo = TRUE)
+#wenn nur outcome will dann echo = FALSE
+
+library(palmerpenguins)
+library(ggplot2)
+```
+
+
+
+We analyze here properties of the penguins living in Tasmania for the first time.
+
+## Where penguins live
+
+Penguins live on *three* islands.
+
+```{r islands}
+# plot of island => Kommentar zu Code
+ggplot(penguins, aes(x = island)) + geom_bar(aes(fill = species), position = position_dodge2(preserve = 'single', reverse = TRUE)) + scale_fill_viridis_d() + theme_minimal()
+```
+
+Schlussfolgerung: Adelie is the only species, that lives on all three islands.
+
+A question concerns
+
+```{r weight}
+ggplot(penguins, aes(x = species, y = body_mass_g)) + geom_boxplot() + theme_classic()
+```
+
+```{r, warning = FALSE, message = FALSE}
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(color = sex)) + geom_smooth(method = "lm") + theme_classic()
+```
+
+These seems to be a strong relationship between weight and body size. But what is the level of significance of this relationship?
+
+# 1. Welche Art von Variable
+# 2. ein oder mehrere Messzeitpunkte (repetet => quant: lmer, qual.bin: glmer, non repetet mesurement => quant: lm, qual bin: glm)
+
+```{r}
+fit <- lm(flipper_length_mm ~ body_mass_g + sex, data = penguins)
+summary(fit)
+```
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point(aes(color = sex)) + geom_smooth(aes(color = sex), method = "lm") + scale_color_viridis_d() + theme_classic()
+```
+
+sind bodymass und flipper length Prädiktoren für Geschlecht?
+
+```{r}
+fit <- glm(sex ~ body_mass_g + flipper_length_mm, family = binomial, data = penguins)
+summary (fit)
+```
+poisson Regression, lineare Regression, logistische Regression, F Test
+
+our special interest to us was possible role that island has on weight (body mass) when adjusted for the sex and the species of the penguin. This would suggest there would be more food on one of the islands.
+
+```{r}
+Model = lm(body_mass_g ~ island + sex + species, data = penguins)
+summary(Model)
+
+Model2 = lm(body_mass_g ~ sex + species, data = penguins)
+anova(Model, Model2)
+```
+

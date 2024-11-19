@@ -1,0 +1,84 @@
+---
+title: "7. Termin"
+author: "Lena Heidrich"
+date: "2024-11-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r }
+library(palmerpenguins)
+names(penguins)
+fit <-lm(body_mass_g ~ species + sex, data = penguins)
+summary(fit)
+fit2 <- glm(sex~ species + body_mass_g, family = binomial, data = penguins)
+bill_ratio <- penguins$bill_depth_mm/(penguins$bill_length_mm + penguins$bill_depth_mm)
+hist(bill_ratio)
+fit3 <- glm(bill_ratio ~ sex + species, data = penguins, family = quasibinomial)
+summary(fit3)
+
+```
+
+Datensatz earnings
+
+```{r }
+library(foreign)
+setwd("~/SE R WiSe 24")
+earns <- read.dta("heights.dta")
+names(earns)
+
+fit4 <- lm(earn ~ height, data = earns)
+summary(fit4)
+
+```
+Größe hat Einfluss auf Gehalt
+
+Muss kontrollieren für Geschlecht => Unterschied für Geschlecht
+```{r }
+fit5 <- lm(earn ~ height + sex, data = earns)
+summary(fit5)
+```
+
+
+
+
+
+Aufgabe: neues Markdown erstellen
+
+```{r }
+knitr::opts_chunk$set(echo = TRUE)
+
+library(foreign)
+library(ggplot2)
+
+#load data
+setwd("~/SE R WiSe 24")
+earns <- read.dta("heights.dta")
+names(earns)
+```
+
+##Earnings depend on height
+A little known fact is that earnings depend on height.
+
+```{r }
+fit5 <- summary(lm(earn ~ height + sex, data = earns))
+```
+As we can see it is a small effect relative to sex.
+
+## Interaction with sex
+
+What we do not yet known,
+
+This can be visualized in a plot of earnings on height
+
+```{r }
+ggplot(earns, aes(x = height, y = earn, color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", aes(group = sex)) +
+  theme_classic()
+```
